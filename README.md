@@ -1,7 +1,7 @@
 # wireguard-client-killswitch
 Adds iptables rules to disable IPv6 and killswitch for any internet traffic not bound for the VPN tunnel.  Also allows local/private traffic, while limiting DNS traffic as an extra layer of leak protection.
 
-Recommended to call it by including in your wg0.conf file’s '[Interface]' Section as a 'PostUp' command like:
+## Recommended to call it by including in your wg0.conf file’s '[Interface]' Section as a 'PostUp' command like:
 
 ```
 [Interface]
@@ -16,4 +16,20 @@ PostUp = /config/killswitch.sh
 PublicKey = 123123123123123123123123123123123123=
 AllowedIPs = 0.0.0.0/0
 Endpoint = 222.333.44.55:51820
+```
+## Recommended to map this into your container via a docker volume mapping like:
+### Docker Compose snippet:
+```yaml
+...
+   volumes:
+      - '/host/path/appdata/wg-client/config/wg0.conf:/config/wg_confs/wg0.conf'
+      - '/host/path/appdata/wg-client/config/killswitch.sh:/config/killswitch.sh'
+...
+```
+### Docker Run Command snippet:
+```sh
+docker run -v /host/path/appdata/wg-client/config/wg0.conf:/config/wg_confs/wg0.conf \
+           -v /host/path/appdata/wg-client/config/killswitch.sh:/config/killswitch.sh \
+           ... \
+           [IMAGE_NAME]
 ```

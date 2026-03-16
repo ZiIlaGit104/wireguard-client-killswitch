@@ -1,0 +1,22 @@
+services:
+  wireguard-client:
+    image: linuxserver/wireguard:latest
+    container_name: wireguard-client
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    network_mode: bridge
+    sysctls:
+      - net.ipv6.conf.all.disable_ipv6=1
+      - net.ipv6.conf.default.disable_ipv6=1
+      - net.ipv4.conf.all.src_valid_mark=1
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=America/New_York
+      - PERSISTENTKEEPALIVE=25
+    volumes:
+      - '/host/path/appdata/wg-client/config/wg_confs/wg0.conf:/config/wg_confs/wg0.conf'
+      - '/host/path/appdata/wg-client/config/killswitch.sh:/config/killswitch.sh'
+      - '/lib/modules:/lib/modules'  
+    restart: always

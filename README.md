@@ -1,5 +1,5 @@
 # wireguard-client-killswitch
-Adds iptables rules to disable IPv6 and killswitch for any internet traffic not bound for the VPN tunnel.  Also allows local/private traffic, while limiting DNS traffic as an extra layer of leak protection.
+Adds iptables rules to completely disable IPv6 and killswitch for any IPv4 internet traffic not bound for the VPN tunnel.  Also allows local/private traffic, while limiting DNS traffic as an extra layer of leak protection.
 
 ## Recommended to call it by including in your wg0.conf file’s '[Interface]' Section as a 'PostUp' command like:
 
